@@ -36,6 +36,25 @@ def get_all_task():
 
     # Return a JSON response with the list of tasks
     return jsonify(task_list)
+    
+
+@app.route('/designate',methods=['POST'])
+def post_designate():
+    data = request.json
+    designate = Designate.from_json(json_obj = data)
+    db.session.add(designate)
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
+
+@app.route('/designateAll',methods=['GET'])
+def get_all_designate():
+    designates = Designate.query.filter_by(done=False).all()
+    designate_list = []
+    for designate in designates:
+        designate_list.append(designate.to_json())
+    return jsonify(designate_list)
 
 
 @app.route('/taskqueue',methods=['POST'])

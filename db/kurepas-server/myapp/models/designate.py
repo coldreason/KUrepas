@@ -6,17 +6,15 @@ class Designate(db.Model):
     task_id = db.Column(db.Integer, unique=True, nullable=False)
     unit_id = db.Column(db.Integer, unique=False, nullable=False)
     score = db.Column(db.Integer, unique=False, nullable=False)
-    done = db.Column(db.Boolean, unique=False, nullable=False)
+    done = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def from_json(json_obj):
         designate = Designate()
-        designate.id = json_obj['id']
         designate.task_id = json_obj['task_id']
         designate.unit_id = json_obj['unit_id']
         designate.score = json_obj['score']
-        designate.done = json_obj['done']
         return designate
     
     def to_json(self):
