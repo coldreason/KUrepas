@@ -9,13 +9,15 @@ get_taskIDs_with_unitID_two(requestQueue)
 get_taskIDs_with_unitID_three(requestQueue)
 get_taskIDs_with_unitID_four(requestQueue)
 
-if
-
-
-write1_scoreQueue(courier1_score)
-write2_scoreQueue(courier2_score)
-write3_scoreQueue(courier3_score)
-write4_scoreQueue(courier4_score)
-write5_scoreQueue(courier5_score)
+if taskIDs = "A":
+  write1_scoreQueue(courier1_score)
+elif taskIDs = "B":
+  write2_scoreQueue(courier2_score)
+elif taskIDs = "C":
+  write3_scoreQueue(courier3_score)
+elif taskIDs = "D":
+  write4_scoreQueue(courier4_score)
+else:
+  write5_scoreQueue(courier5_score) 
 
 write_designateQueue(writeData, designateQueue)
