@@ -22,18 +22,18 @@ services:
       timeout: 2s
       retries: 1000
 
-  # app: # 컨테이너1 : app
-  #   build: KUREPAS-SERVER/
-  #   image: kurepas-server/
-  #   links:
-  #     - "db:mysqldb"
-  #   networks:
-  #    - flask-network
-  #   ports:
-  #     - "5000:5000"
-  #   container_name: kurepas-server
-  #   depends_on:
-  #     - db
+  app: # 컨테이너1 : app
+    build: KUREPAS-SERVER/
+    image: kurepas-server/
+    links:
+      - "db:mysqldb"
+    networks:
+     - flask-network
+    ports:
+      - "5000:5000"
+    container_name: kurepas-server
+    depends_on:
+      - db
   # client: 
   #   build: PLENTI-CLIENT/
   #   image: plenti-client
