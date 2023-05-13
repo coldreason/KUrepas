@@ -8,7 +8,7 @@ class Task(db.Model):
     pos_s_y = db.Column(db.String(20), unique=False, nullable=False)
     pos_e_x = db.Column(db.String(20), unique=False, nullable=False)
     pos_e_y = db.Column(db.String(20), unique=False, nullable=False)
-    done = db.Column(db.Boolean, unique=False, nullable=False)
+    done = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -18,7 +18,6 @@ class Task(db.Model):
         task.pos_s_y = json_obj['pos_s_y']
         task.pos_e_x = json_obj['pos_e_x']
         task.pos_e_y = json_obj['pos_e_y']
-        task.done = json_obj['done']
         return task
     
     def to_json(self):

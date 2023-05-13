@@ -1,11 +1,10 @@
 from db import db
 from datetime import datetime
 
-class Designate(db.Model):
+class Taskset(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    task_id = db.Column(db.Integer, unique=True, nullable=False)
     unit_id = db.Column(db.Integer, unique=False, nullable=False)
-    score = db.Column(db.Integer, unique=False, nullable=False)
+    data = db.Column(db.Integer, unique=False, nullable=False)
     done = db.Column(db.Boolean, unique=False, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)

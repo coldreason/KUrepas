@@ -3,7 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from models.user import User
 from models.task import Task
+from models.designate import Designate
+from models.requestscore import Requestscore
+from models.score import Score
 from flask_cors import CORS
+
 
 from db import db
 
@@ -34,10 +38,31 @@ def get_all_task():
 @app.route('/register_task',methods=['POST'])
 def register_task():
     data = request.json
-    data['done'] = False;
     task = Task.from_json(json_obj = data)
     db.session.add(task)
     db.session.commit()
     response = make_response("Data received: " + str(data))
     response.status_code = 200
     return response
+
+@app.route('/score_request',methods=['POST'])
+def register_score_request():
+    data = request.json
+    requestscore = Requestscore.from_json(json_obj = data)
+    db.session.add(requestscore)
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
+
+@app.route('/score_request',methods=['GET'])
+def get_all_score_request():
+    requestscores = Requestscore.query.all()
+
+    requestscores_list = []
+    for requestscore in requestscores:
+        requestscores_list.append(requestscore.to_json())
+
+    # Return a JSON response with the list of tasks
+    return jsonify(requestscores_list)
+
