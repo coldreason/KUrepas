@@ -36,7 +36,22 @@ def get_all_task():
 
     # Return a JSON response with the list of tasks
     return jsonify(task_list)
+
+@app.route('/get_task_queue',methods=['GET'])
+def get_task_queue():
+    designate_list = Designate.query.filter_by(done=False).all()
+    allocated_id_list = []
+    for designate in designate_list:
+        allocated_id_list.append(designate.task_id)
     
+    task_list = Task.query.filter_by(done=False).all()
+    ret_id_list = []
+    for task in task_list:
+        if task.id not in allocated_id_list:
+            ret_id_list.append(task.id)
+
+    return jsonify(ret_id_list)
+
 
 @app.route('/designate',methods=['POST'])
 def post_designate():
