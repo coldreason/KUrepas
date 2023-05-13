@@ -1,0 +1,65 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_DATABASE: kurepas
+      MYSQL_ROOT_PASSWORD: Password12!
+    ports:
+      - 3306:3306
+    networks:
+     - flask-network
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+      interval: 10s
+      timeout: 2s
+      retries: 1000
+
+  # app: # 컨테이너1 : app
+  #   build: KUREPAS-SERVER/
+  #   image: kurepas-server/
+  #   links:
+  #     - "db:mysqldb"
+  #   networks:
+  #    - flask-network
+  #   ports:
+  #     - "5000:5000"
+  #   container_name: kurepas-server
+  #   depends_on:
+  #     - db
+  # client: 
+  #   build: PLENTI-CLIENT/
+  #   image: plenti-client
+  #   container_name: "plenti-client" 
+  #   working_dir: "/app/client" 
+  #   ports: 
+  #     - 3000:3000
+
+  # server:
+  #   build: PLENTI-SERVER/
+  #   image: plenti-server
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #    - spring-network
+  #   environment:
+  #     MySQL_HOST: db
+  #     MySQL_PORT: 3306
+  #     MySQL_DATABASE: plenti
+  #     MySQL_ROOT_PASSWORD: Password12!
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+networks:
+  flask-network:
+
+volumes:
+  mysql-data:
