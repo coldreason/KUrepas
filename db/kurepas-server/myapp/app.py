@@ -71,13 +71,11 @@ def get_all_score_request():
     # Return a JSON response with the list of tasks
     return jsonify(requestscores_list)
 
-# @app.route('/score',methods=['GET'])
-# def get_score():
-#     data = request.json
-#     requestscores = Requestscore.query.all()
-#     requestscore = Requestscore.from_json(json_obj = data)
-#     db.session.add(requestscore)
-#     db.session.commit()
-#     response = make_response("Data received: " + str(data))
-#     response.status_code = 200
-#     return response
+@app.route('/score',methods=['GET'])
+def get_score():
+    data = request.json['id']
+    requestscores = Requestscore.query.filter_by(id=int(data)).all()
+    if requestscores:
+        return jsonify(requestscores[0].to_json())
+    else:
+        return jsonify([])
