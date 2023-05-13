@@ -46,13 +46,16 @@ def post_taskqueue():
     response.status_code = 200
     return response
 
-#아직 스코어링 요청 작업을 안한 id 대상으로 하나 보내줌
-# @app.route('/taskqueue',methods=['GET'])
-# def get_taskqueue():
-#     task = Task.query.filter_by(id=int(taskId)).all()[0]
-#     response = make_response("Data received: " + str(data))
-#     response.status_code = 200
-#     return response
+# 아직 스코어링 요청 작업을 안한 id 대상으로 하나 보내줌
+@app.route('/taskqueue',methods=['GET'])
+def get_taskqueue():
+    tasks = Task.query.filter_by(assigned=False).all()
+    if tasks:
+        tasks[0].assigned = True
+        db.session.commit()
+        return jsonify(tasks[0].to_json())
+    else:
+        return jsonify([])
 
 
 @app.route('/get_task/<taskId>',methods=['GET'])

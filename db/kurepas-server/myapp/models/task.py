@@ -9,6 +9,7 @@ class Task(db.Model):
     pos_e_x = db.Column(db.String(20), unique=False, nullable=False)
     pos_e_y = db.Column(db.String(20), unique=False, nullable=False)
     done = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    assigned = db.Column(db.Boolean, unique=False, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -28,6 +29,7 @@ class Task(db.Model):
             "pos_e_x": self.pos_e_x,
             "pos_e_y": self.pos_e_y,
             "done": self.done,
+            "assigned":self.assigned,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }
