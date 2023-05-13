@@ -22,12 +22,15 @@ print(len(taskSet))
 hi = []
 print(hi)
 print(len(hi))
-def ppp5(i):
-	print('hello0.5' + i)
+def ppp5():
+	print('hello0.5')
 	threading.Timer(0.5, ppp5).start()
 def ppp11():
 	print('hello1.1')
 	threading.Timer(1.1, ppp11).start()
 
-ppp5(6)
+ppp5()
 ppp11()
+print('hello2.1')
+print('hello2.1')
+print('hello2.1')
