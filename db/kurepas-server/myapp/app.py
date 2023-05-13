@@ -48,14 +48,34 @@ def post_designate():
     response.status_code = 200
     return response
 
-@app.route('/designateAll',methods=['GET'])
-def get_all_designate():
-    designates = Designate.query.filter_by(done=False).all()
-    designate_list = []
-    for designate in designates:
-        designate_list.append(designate.to_json())
-    return jsonify(designate_list)
 
+
+@app.route('/designate/<unitId>',methods=['GET'])
+def get_designate(unitId):
+    designates = Designate.query.filter_by(done=False,unit_id = unitId).all()
+    if designates:
+        task = Task.query.filter_by(id=int(designates[0].task_id)).first()
+        ret = {}
+        ret['pos_e_x'] = task.pos_e_x
+        ret['pos_e_y'] = task.pos_e_y
+        ret['pos_s_x'] = task.pos_s_x
+        ret['pos_s_y'] = task.pos_s_y
+        ret['id'] = designates[0].id
+        return jsonify(ret)
+
+    return jsonify([])
+
+@app.route('/finishTask',methods=['POST'])
+def post_finish():
+    data = request.json['id']
+    designate = Designate.query.filter_by(id=data).all()[0]
+    designate.done=True
+    task = Task.query.filter_by(id=designate.task_id).first()
+    task.done=True
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
 
 @app.route('/taskqueue',methods=['POST'])
 def post_taskqueue():
