@@ -5,6 +5,7 @@ from models.user import User
 from models.task import Task
 from models.designate import Designate
 from models.requestscore import Requestscore
+from models.currentpos import Currentpos
 from models.score import Score
 from flask_cors import CORS
 
@@ -79,3 +80,33 @@ def get_score():
         return jsonify(requestscores[0].to_json())
     else:
         return jsonify([])
+    
+@app.route('/current_pos',methods=['GET'])
+def get_pos():
+    data = request.json['unit_id']
+    currentpos_list = Currentpos.query.filter_by(unit_id=int(data)).all()
+    if not currentpos_list:
+        currentpos = Currentpos()
+        currentpos.unit_id = data
+        currentpos.pos_x = "0"
+        currentpos.pos_y = "0"
+        db.session.add(currentpos)
+        db.session.commit()
+        currentpos_list.append(currentpos)
+    currentpos = currentpos_list[0]
+    return jsonify(currentpos.to_json())
+
+@app.route('/current_pos',methods=['POST'])
+def post_pos():
+    data = request.json
+    currentposs = Currentpos.query.filter_by(unit_id=int(data['unit_id'])).all()
+    currentpos = Currentpos.from_json(json_obj = data)
+    if currentposs:
+        currentposs[0].pos_x = currentpos.pos_x
+        currentposs[0].pos_y = currentpos.pos_y
+    else:
+        db.session.add(currentpos)
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
