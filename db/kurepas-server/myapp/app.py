@@ -8,6 +8,8 @@ from models.requestscore import Requestscore
 from models.currentpos import Currentpos
 from models.score import Score
 from flask_cors import CORS
+from sqlalchemy import and_, or_, not_
+
 
 
 from db import db
@@ -111,9 +113,9 @@ def post_score():
 def get_score():
     task_id = request.json['task_id']
     unit_id = request.json['unit_id']
-    requestscores = Requestscore.query.filter_by(task_id=int(task_id),unit_id=int(unit_id)).all()
-    if requestscores:
-        return jsonify(requestscores[0].to_json())
+    scores = Score.query.filter_by(task_id=int(task_id),unit_id=int(unit_id)).all()
+    if scores:
+        return jsonify(scores[0].to_json())
     else:
         return jsonify([])
 
