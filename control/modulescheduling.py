@@ -103,9 +103,11 @@ taskSet = [[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]]
+
 init = 0
 taskID = 0
 def taskQueue2requestQueue() :
+    
     global init
     global taskSet
     if init == 0 :
@@ -128,7 +130,7 @@ def scoreQueue2designateQueue():
     global taskID
     tf = 0
     while True :
-        newscoreData = decoder_scoreQueue(taskID) # which is equal to taskID then remove data line
+        newscoreData = decoder_scoreQueue() # which is equal to taskID then remove data line
         if(newscoreData == None) :
             if(tf == 0):
                 newDesignateQueue = []

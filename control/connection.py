@@ -1,15 +1,11 @@
-def connection_in():
-    json_string = """{
-		"taskID" : 0,
-		"pos_s_x" : 0,
-		"pos_s_y" : 0,
-		"pos_e_x" : 0,
-		"pos_e_y" : 0
-	}"""
-    print('data in')
+import requests
+
+def connection_in(query):
+    json_string = requests.get(query)
+    if(json_string == ''):
+        return None
     return json_string
 
-def connection_out(hello):
-    print('data out')
-    print(hello)
+def connection_out(query, data):
+    requests.post(query, json=data)
     return 0
