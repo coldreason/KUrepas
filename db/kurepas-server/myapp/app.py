@@ -35,6 +35,26 @@ def get_all_task():
     # Return a JSON response with the list of tasks
     return jsonify(task_list)
 
+
+@app.route('/taskqueue',methods=['POST'])
+def post_taskqueue():
+    data = request.json
+    task = Task.from_json(json_obj = data)
+    db.session.add(task)
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
+
+#아직 스코어링 요청 작업을 안한 id 대상으로 하나 보내줌
+# @app.route('/taskqueue',methods=['GET'])
+# def get_taskqueue():
+#     task = Task.query.filter_by(id=int(taskId)).all()[0]
+#     response = make_response("Data received: " + str(data))
+#     response.status_code = 200
+#     return response
+
+
 @app.route('/get_task/<taskId>',methods=['GET'])
 def get_task(taskId):
     task = Task.query.filter_by(id=int(taskId)).all()[0]
@@ -51,6 +71,7 @@ def register_task():
     response.status_code = 200
     return response
 
+#해당 unit id에 task score 요청
 @app.route('/score_request',methods=['POST'])
 def register_score_request():
     data = request.json
@@ -61,15 +82,15 @@ def register_score_request():
     response.status_code = 200
     return response
 
+#해당 unit id에 할당된 score해야할 task있는지 조회
 @app.route('/score_request',methods=['GET'])
-def get_all_score_request():
-    requestscores = Requestscore.query.all()
-
-    requestscores_list = []
-    for requestscore in requestscores:
-        requestscores_list.append(requestscore.to_json())
-
-    return jsonify(requestscores_list)
+def get_score_request():
+    data = request.json['unit_id']
+    requestscores = Requestscore.query.filter_by(unit_id=int(data)).all()
+    if requestscores:
+        return jsonify(requestscores[0].to_json())
+    else:
+        return jsonify([])
 
 #스코어 점수 업데이트
 @app.route('/score',methods=['POST'])
@@ -82,11 +103,12 @@ def post_score():
     response.status_code = 200
     return response
 
-
+#스코어 점수 확인
 @app.route('/score',methods=['GET'])
 def get_score():
-    data = request.json['id']
-    requestscores = Requestscore.query.filter_by(id=int(data)).all()
+    task_id = request.json['task_id']
+    unit_id = request.json['unit_id']
+    requestscores = Requestscore.query.filter_by(task_id=int(task_id),unit_id=int(unit_id)).all()
     if requestscores:
         return jsonify(requestscores[0].to_json())
     else:
