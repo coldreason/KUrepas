@@ -1,5 +1,6 @@
 from decoder import *
 from encoder import *
+import random
 import threading
 
 taskSet = [[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0],
@@ -121,7 +122,7 @@ def taskQueue2requestQueue() :
             print('new taskQueue exists')
     threading.Timer(0.03, taskQueue2requestQueue).start()
 
-# Todo
+
 def scoreQueue2designateQueue():
     newScoreQueue = []
     global taskID
@@ -143,7 +144,8 @@ def scoreQueue2designateQueue():
 
 def designateOperation(newScoreQueue):
     print(newScoreQueue)
-    return 
+    i = random.randint(0, 4)
+    return  i
 
 def reAllocating():
     global taskSet
@@ -166,10 +168,14 @@ def reAllocating():
             encoder_taskSet(taskSet[i])
     threading.Timer(4, reAllocating).start()
 
-# Todo
 def allocateOperation(newDesignateQueue): # this is a module that will be changed to AI model
     print(newDesignateQueue)
-    pos_x = 0 # Todo : random
-    pos_y = 0 # Todo : random
-    new_set = [0,0,1,0,0] # Todo : random
+    pos_x = random.randint(0,19)
+    pos_y = random.randint(0,19)
+    while True:
+        new_set = [random.randint(0,1),random.randint(0,1),random.randint(0,1),random.randint(0,1),random.randint(0,1)]
+        if 1 not in new_set:
+            continue
+        else:
+            break
     return pos_x, pos_y, new_set

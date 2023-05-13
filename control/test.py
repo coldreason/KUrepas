@@ -1,6 +1,7 @@
 import json
 from connection_test import connection_in, connection_out
 import threading
+import random
 
 json_string_in = connection_in()
 json_object_in = json.loads(json_string_in) # dict type
