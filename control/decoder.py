@@ -5,6 +5,7 @@ def decoder_taskQueue():
 	New_data = connection_in() # json
 	if(New_data == None):
 		print('no new task detected in Queue')
+		return None
 	else:
 		New_object_in = json.loads(New_data) # dict
 		print('new task detected')
@@ -19,6 +20,7 @@ def decoder_taskSet():
 	New_data = connection_in() #json
 	if(New_data == None):
 		print('no new task detected in Queue')
+		return None
 	else:
 		New_object_in = json.loads(New_data) # dict
 		print('new task detected')
@@ -33,6 +35,7 @@ def decoder_scoreQueue():
 	New_data = connection_in() #json
 	if(New_data == None):
 		print('no new task detected in Queue')
+		return None
 	else:
 		New_object_in = json.loads(New_data) # dict
 		print('new task detected')
@@ -45,6 +48,7 @@ def decoder_designateQueue():
 	New_data = connection_in() #json
 	if(New_data == None):
 		print('no new complete signal detected in Queue')
+		return None
 	else:
 		New_object_in = json.loads(New_data) # dict
 		print('new complete signal detected')

@@ -9,3 +9,10 @@ print(json_object_in)
 
 json_object_out = {'id': 1, 'username': 'Bret', 'email': 'Sincere@april.biz', 'address': {'street': 'Kulas Light', 'suite': 'Apt. 556', 'city': 'Gwenborough', 'zipcode': '92998-3874'}, 'admin': False, 'hobbies': None}
 connection_out(json_object_out)
+
+taskSet = [] # dict list
+print()
+print()
+taskSet.append({'id': 1, 'username': 'Bret', 'email': 'Sincere@april.biz'}) # Initialize
+taskSet.append({'id': 1, 'username': 'Bret', 'email': 'Sincere@april.biz'})
+print(taskSet)

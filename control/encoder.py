@@ -1,7 +1,7 @@
 import json
 from connection import connection_out
 
-def decoder_taskSet(writeData):
+def encoder_taskSet(writeData):
 	print('taskSet new allocated')
 	print(writeData['unitID'])
 	print(writeData['min_x'])
@@ -12,7 +12,7 @@ def decoder_taskSet(writeData):
 	connection_out(object_out)
 	return 0
 	
-def decoder_requestQueue(writeData):
+def encoder_requestQueue(writeData):
 	print('request updated')
 	print(writeData['unitID'])
 	print(writeData['taskID'])
@@ -20,7 +20,7 @@ def decoder_requestQueue(writeData):
 	connection_out(object_out)
 	return 0
 	
-def decoder_designateQueue(writeData):
+def encoder_designateQueue(writeData):
 	print('designate updated')
 	print(writeData['taskID'])
 	print(writeData['unitID'])
