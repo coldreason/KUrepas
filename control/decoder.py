@@ -12,8 +12,8 @@ def decoder_taskQueue():
 		print(New_object_in)
 		return New_object_in
 
-def decoder_scoreQueue():
-	New_data = connection_in('http://54.180.109.46:5000/scorequeue/get_next') #json
+def decoder_scoreQueue(taskID): # task = 7 unit - 0, 1, 4
+	New_data = connection_in('http://54.180.109.46:5000/scorequeue/get_next/'+ taskID) #json
 	if(New_data == None):
 		print('no new task detected in Queue')
 		return None

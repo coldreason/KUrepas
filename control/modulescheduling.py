@@ -109,7 +109,7 @@ taskID = 0
 def taskQueue2requestQueue() :
     
     global init
-    global taskSet
+    global taskSetz
     if init == 0 :
         print('initializing taskSet')
         for i in range(0, 5) :
@@ -130,10 +130,10 @@ def scoreQueue2designateQueue():
     global taskID
     tf = 0
     while True :
-        newscoreData = decoder_scoreQueue() # which is equal to taskID then remove data line
+        newscoreData = decoder_scoreQueue(taskID)
         if(newscoreData == None) :
             if(tf == 0):
-                newDesignateQueue = []
+                newScoreQueue = []
                 break
             break
         newScoreQueue.append(newscoreData)
