@@ -34,6 +34,11 @@ def get_all_task():
     # Return a JSON response with the list of tasks
     return jsonify(task_list)
 
+@app.route('/get_task/<taskId>',methods=['GET'])
+def get_task(taskId):
+    task = Task.query.filter_by(id=int(taskId)).all()[0]
+    return jsonify(task.to_json())
+
 
 @app.route('/register_task',methods=['POST'])
 def register_task():
@@ -66,3 +71,13 @@ def get_all_score_request():
     # Return a JSON response with the list of tasks
     return jsonify(requestscores_list)
 
+# @app.route('/score',methods=['GET'])
+# def get_score():
+#     data = request.json
+#     requestscores = Requestscore.query.all()
+#     requestscore = Requestscore.from_json(json_obj = data)
+#     db.session.add(requestscore)
+#     db.session.commit()
+#     response = make_response("Data received: " + str(data))
+#     response.status_code = 200
+#     return response
