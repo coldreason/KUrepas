@@ -69,8 +69,19 @@ def get_all_score_request():
     for requestscore in requestscores:
         requestscores_list.append(requestscore.to_json())
 
-    # Return a JSON response with the list of tasks
     return jsonify(requestscores_list)
+
+#스코어 점수 업데이트
+@app.route('/score',methods=['POST'])
+def post_score():
+    data = request.json
+    score = Score.from_json(json_obj = data)
+    db.session.add(score)
+    db.session.commit()
+    response = make_response("Data received: " + str(data))
+    response.status_code = 200
+    return response
+
 
 @app.route('/score',methods=['GET'])
 def get_score():
@@ -80,7 +91,8 @@ def get_score():
         return jsonify(requestscores[0].to_json())
     else:
         return jsonify([])
-    
+
+#자동차 현재 위치 조회 
 @app.route('/current_pos',methods=['GET'])
 def get_pos():
     data = request.json['unit_id']
@@ -96,6 +108,7 @@ def get_pos():
     currentpos = currentpos_list[0]
     return jsonify(currentpos.to_json())
 
+#자동차 현재 위치 업데이트
 @app.route('/current_pos',methods=['POST'])
 def post_pos():
     data = request.json
