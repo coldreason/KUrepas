@@ -1,5 +1,5 @@
-from Random_value_scoring get *
-from read_request get *
-from update_designate_queue get *
-from write_score get *
+from Random_value_scoring import *
+from read_request import *
+from update_designate_queue import *
+from write_score import *
 
