@@ -1,9 +1,9 @@
-create table users (
-  id INT(11) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
-);
+-- create table users (
+--   id INT(11) NOT NULL AUTO_INCREMENT,
+--   name VARCHAR(255) NOT NULL,
+--   email VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (id)
+-- );
 
 
 
@@ -13,14 +13,14 @@ create table tasks (
   pos_s_y VARCHAR(20) NOT NULL,
   pos_e_x VARCHAR(20) NOT NULL,
   pos_e_y VARCHAR(20) NOT NULL,
-  finish boolean NOT NULL
+  finish boolean NOT NULL,
   PRIMARY KEY (id)
 );
 
 insert into tasks(pos_s_x, pos_s_y,pos_e_x,pos_e_y,finish ) values ('0.0', '0.0',"20.0","20.0",FALSE);
 
-insert into users(name, email, ) values ('lee', 'test1');
-insert into users(name, email, ) values ('jho', 'test1');
+-- insert into users(name, email, ) values ('lee', 'test1');
+-- insert into users(name, email, ) values ('jho', 'test1');
 
 
 -- create table authority(
