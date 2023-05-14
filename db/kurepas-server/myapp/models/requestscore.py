@@ -11,8 +11,8 @@ class Requestscore(db.Model):
 
     def from_json(json_obj):
         requestscore = Requestscore()
-        requestscore.task_id = json_obj['task_id']
-        requestscore.unit_id = json_obj['unit_id']
+        requestscore.task_id = int(json_obj['task_id'])
+        requestscore.unit_id = int(json_obj['unit_id'])
         return requestscore
     
     def to_json(self):

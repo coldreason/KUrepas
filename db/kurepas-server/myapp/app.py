@@ -9,7 +9,9 @@ from models.currentpos import Currentpos
 from models.score import Score
 from flask_cors import CORS
 from sqlalchemy import and_, or_, not_
+import json
 
+import sys
 
 
 from db import db
@@ -188,7 +190,7 @@ def get_edge():
 @app.route('/designate',methods=['POST'])
 def post_designate():
     data = request.json
-    designate = Designate.from_json(json_obj = data)
+    designate = Designate.from_json(json_obj = json.loads(data))
     db.session.add(designate)
     db.session.commit()
     response = make_response("Data received: " + str(data))
@@ -198,23 +200,29 @@ def post_designate():
 @app.route('/refreshMap',methods=['POST'])
 def post_map_data():
     data = request.json
-    TASK_SET[data['id']] = data['map']
+    TASK_SET[data['id']%5] = data['map']
 
-    return jsonify(TASK_SET[data['id']])
+    return jsonify(TASK_SET[data['id']%5])
 
 @app.route('/designate/<unitId>',methods=['GET'])
 def get_designate(unitId):
-    designates = Designate.query.filter_by(done=False,unit_id = unitId).order_by(Designate.created_at.desc()).all()
+    designates = Designate.query.filter_by(unit_id=unitId).order_by(Designate.created_at.desc()).all()
     if designates:
-        task = Task.query.filter_by(id=int(designates[0].task_id)).first()
-        ret = {}
-        ret['pos_e_x'] = task.pos_e_x
-        ret['pos_e_y'] = task.pos_e_y
-        ret['pos_s_x'] = task.pos_s_x
-        ret['pos_s_y'] = task.pos_s_y
-        ret['id'] = designates[0].id
-        return jsonify(ret)
-
+        designate = designates[0]
+        task = Task.query.filter_by(id=designate.task_id).first()
+        task.done=True
+        db.session.commit()
+        designates = Designate.query.filter_by(done=False,unit_id = unitId).order_by(Designate.created_at.desc()).all()
+        if designates:
+            task = Task.query.filter_by(id=int(designates[0].task_id)).first()
+            ret = {}
+            ret['pos_e_x'] = task.pos_e_x
+            ret['pos_e_y'] = task.pos_e_y
+            ret['pos_s_x'] = task.pos_s_x
+            ret['pos_s_y'] = task.pos_s_y
+            ret['id'] = designates[0].id
+            return jsonify(ret)
+        
     return jsonify([])
 
 @app.route('/finishTask',methods=['POST'])
@@ -232,7 +240,7 @@ def post_finish():
 @app.route('/taskqueue',methods=['POST'])
 def post_taskqueue():
     data = request.json
-    task = Task.from_json(json_obj = data)
+    task = Task.from_json(json_obj = json.loads(data))
     db.session.add(task)
     db.session.commit()
     response = make_response("Data received: " + str(data))
@@ -242,7 +250,7 @@ def post_taskqueue():
 # 아직 스코어링 요청 작업을 안한 id 대상으로 하나 보내줌
 @app.route('/taskqueue',methods=['GET'])
 def get_taskqueue():
-    tasks = Task.query.filter_by(assigned=False).all()
+    tasks = Task.query.filter_by(assigned=False).order_by(Task.id.asc()).all()
     if tasks:
         tasks[0].assigned = True
         db.session.commit()
@@ -260,7 +268,7 @@ def get_task(taskId):
 @app.route('/register_task',methods=['POST'])
 def register_task():
     data = request.json
-    task = Task.from_json(json_obj = data)
+    task = Task.from_json(json_obj = json.loads(data))
     db.session.add(task)
     db.session.commit()
     response = make_response("Data received: " + str(data))
@@ -271,7 +279,7 @@ def register_task():
 @app.route('/score_request',methods=['POST'])
 def register_score_request():
     data = request.json
-    requestscore = Requestscore.from_json(json_obj = data)
+    requestscore = Requestscore.from_json(json_obj = json.loads(data))
     db.session.add(requestscore)
     db.session.commit()
     response = make_response("Data received: " + str(data))
@@ -284,6 +292,8 @@ def get_score_request():
     data = request.json['unit_id']
     requestscores = Requestscore.query.filter_by(unit_id=int(data)).all()
     if requestscores:
+        requestscores[0].done = True
+        db.session.commit()
         return jsonify(requestscores[0].to_json())
     else:
         return jsonify([])
@@ -292,7 +302,7 @@ def get_score_request():
 @app.route('/score',methods=['POST'])
 def post_score():
     data = request.json
-    score = Score.from_json(json_obj = data)
+    score = Score.from_json(json_obj = json.loads(data))
     db.session.add(score)
     db.session.commit()
     response = make_response("Data received: " + str(data))
@@ -331,7 +341,7 @@ def get_pos():
 def post_pos():
     data = request.json
     currentposs = Currentpos.query.filter_by(unit_id=int(data['unit_id'])).all()
-    currentpos = Currentpos.from_json(json_obj = data)
+    currentpos = Currentpos.from_json(json_obj = json.loads(data))
     if currentposs:
         currentposs[0].pos_x = currentpos.pos_x
         currentposs[0].pos_y = currentpos.pos_y
