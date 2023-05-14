@@ -56,12 +56,7 @@ function Monitor() {
   return (
     <MainContainer>
       <UnityContainer>
-        <div>
-          <Unity
-            unityProvider={unityProvider}
-            style={{ width: "400px", height: "500px" }}
-          />
-        </div>
+        <iframe src="" width="398px" height="500px"></iframe>
         <p
           style={{
             fontWeight: 700,

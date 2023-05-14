@@ -5,6 +5,7 @@ import API from "../utils/axios";
 import { styled } from "styled-components";
 function EdgeCard({ edge }) {
   const [tooltipText, setTooltipText] = useState("");
+
   const onTooltipOpen = async (id) => {
     const fetchData = async () => {
       try {
