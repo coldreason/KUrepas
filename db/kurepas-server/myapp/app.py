@@ -195,11 +195,16 @@ def post_designate():
     response.status_code = 200
     return response
 
+@app.route('/refreshMap',methods=['POST'])
+def post_map_data():
+    data = request.json
+    TASK_SET[data['id']] = data['map']
 
+    return jsonify(TASK_SET[data['id']])
 
 @app.route('/designate/<unitId>',methods=['GET'])
 def get_designate(unitId):
-    designates = Designate.query.filter_by(done=False,unit_id = unitId).all()
+    designates = Designate.query.filter_by(done=False,unit_id = unitId).order_by(Designate.created_at.desc()).all()
     if designates:
         task = Task.query.filter_by(id=int(designates[0].task_id)).first()
         ret = {}
