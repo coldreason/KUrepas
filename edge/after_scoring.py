@@ -129,11 +129,6 @@ unit_id_4 = 4
 unit_id_5 = 5
 
 while True:
-  task_id_1 = np.random.randint(2,4)
-  task_id_2 = np.random.randint(2,4)
-  task_id_3 = np.random.randint(2,4)
-  task_id_4 = np.random.randint(2,4)
-  task_id_5 = np.random.randint(2,4)
 
   start_x_1 = int(get_pos_s_x_by_id(task_data, task_id_1))
   start_y_1 = int(get_pos_s_y_by_id(task_data, task_id_1))

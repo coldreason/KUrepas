@@ -5,6 +5,8 @@ using System;
 
 public class Taxi1 : MonoBehaviour
 {
+    public Vector3 pos;
+    
     public Animator anim;
     private float y = 0f;
     private string id = "taxi1";    // taxi1 이라는 아이디 명령이 들어온거를 일단 하드코딩
@@ -20,7 +22,7 @@ public class Taxi1 : MonoBehaviour
     {
         if (id == "taxi1")
         {
-            Vector3 target = new Vector3(60, 0, 60);
+            Vector3 target = new Vector3(0, 0, 20);
 
             Move(target);
             get_destination();
@@ -34,7 +36,7 @@ public class Taxi1 : MonoBehaviour
 
     void Move(Vector3 destination)
     {
-        Vector3 pos = transform.position;
+        pos = transform.position;
 
         // 바라보는 방향 벡터
         Vector3 dir = new Vector3(0, 0, 0);
