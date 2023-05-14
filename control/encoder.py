@@ -7,10 +7,10 @@ def encoder_taskSet(i,writeData):
     
 def encoder_requestQueue(writeData):
     object_out = json.dumps(writeData)
-    connection_out('http://172.20.10.3:5000/requestqueue', object_out)
+    print(object_out)
+    connection_out('http://172.20.10.3:5000/score_request', object_out)
     
 def encoder_designateQueue(writeData):
     object_out = json.dumps(writeData)
-    print('hello')
     print(object_out)
-    connection_out('http://172.20.10.3:5000/designatequeue', object_out)
+    connection_out('http://172.20.10.3:5000/designate', object_out)

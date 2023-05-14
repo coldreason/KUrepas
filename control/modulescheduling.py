@@ -110,19 +110,21 @@ def taskQueue2requestQueue() :
     print(1)
     global init
     global taskSetz
+    global taskID
     if init == 0 :
         print('initializing taskSet')
         for i in range(0, 5) :
-            encoder_taskSet(i, taskSet[i])
+            encoder_taskSet(i+1, taskSet[i])
             init = 1
     else:
         taskQueueData = decoder_taskQueue() # [pos_x, pos_y]
         if(taskQueueData != None) :
+            taskID = taskQueueData['id']
             x = int(taskQueueData['pos_s_x'])
             y = int(taskQueueData['pos_s_y'])
             for i in range(0, 5) :
                 if taskSet[i][x][y] == 1:
-                    encoder_requestQueue({'unit_id' : i, 'task_id' : taskQueueData['id']})
+                    encoder_requestQueue({'task_id' : int(taskQueueData['id']),'unit_id' : i+1})
     threading.Timer(0.4, taskQueue2requestQueue).start()
 
 
@@ -130,7 +132,7 @@ def scoreQueue2designateQueue():
     print(2)
     newscoreDataList = []
     global taskID
-    for unitID in range(0,5):
+    for unitID in range(1,6):
         print('taskID: ' + str(taskID) + 'unitID' + str(unitID))
         newscoreData = decoder_scoreQueue(taskID, unitID)
         print(newscoreData)
@@ -138,7 +140,7 @@ def scoreQueue2designateQueue():
             newscoreDataList.append(newscoreData)
     if(len(newscoreDataList) != 0) :
         i = designateOperation(newscoreDataList)
-        encoder_designateQueue({'unit_id' : i, 'task_id' : taskID})
+        encoder_designateQueue({'unit_id' : i+1, 'task_id' : taskID+1})
         taskID = taskID + 1
     threading.Timer(3, scoreQueue2designateQueue).start()
 

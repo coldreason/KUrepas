@@ -26,7 +26,7 @@ data = {"unit_id": "5", "pos_x": "6.0", "pos_y": "3.0"}
 response_request = requests.post("http://172.20.10.3:5000/current_pos", json = data)
 request_data = response_request.json 
 
-data = {"unit_id": "1", "task_id": "3"}
+data = {"unit_id": 1, "task_id": 3}
 response_request = requests.post("http://172.20.10.3:5000/score_request", json = data)
 request_data = response_request.json
 
