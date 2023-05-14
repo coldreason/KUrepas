@@ -78,11 +78,14 @@ function EdgeCard({ edge }) {
                 border: "1px solid white",
               }}
             >
-              {edge.task_set.map((e1, index1) => (
-                <div key={e1} style={{ display: "flex", flexDirection: "row" }}>
+              {JSON.parse(edge.task_set).map((e1, index1) => (
+                <div
+                  key={[edge.edge_id, index1, e1]}
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
                   {e1.map((e2, index2) => (
                     <div
-                      key={[index1, index2]}
+                      key={[edge.edge_id, index1, index2]}
                       style={{
                         width: "5px",
                         height: "5px",
@@ -111,7 +114,7 @@ function EdgeCard({ edge }) {
             marginTop: "5px",
             borderRadius: "5px",
             overflow: "hidden",
-            border: "1px solid white",
+            border: edge.task_list.length > 0 ? "1px solid white" : "0px none",
           }}
         >
           {edge.task_list.map((e, index) => (

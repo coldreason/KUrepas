@@ -29,6 +29,7 @@ function Monitor() {
       try {
         const { data } = await API.get(`/get_edge`);
         setEdges(data);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -147,10 +148,12 @@ const MainContainer = styled.div`
 `;
 const UnityContainer = styled.div`
   width: 400px;
+  margin-top: 50px;
 `;
 const MonitorContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 `;
 const Row = styled.div`
   display: flex;
