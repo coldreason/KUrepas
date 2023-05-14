@@ -4,7 +4,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: mysql
+    container_name: my_sql
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
