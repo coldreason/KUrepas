@@ -20,7 +20,7 @@ public class Taxi2 : MonoBehaviour
     {
         if (id == "taxi2")
         {
-            Vector3 target = new Vector3(60, 0, 60);
+            Vector3 target = new Vector3(60, 0, 200);
 
             Move(target);
             get_destination();
