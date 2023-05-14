@@ -171,9 +171,9 @@ def get_edge():
         buf['pos_x'] = currentpos.pos_x
         buf['pos_y'] = currentpos.pos_y
         designbuf = Designate.query.filter_by(done=False,unit_id=currentpos.unit_id).order_by(Designate.created_at.desc()).all()
-        buf['currnet_task'] = ""
+        buf['current_task'] = ""
         if designbuf:
-            buf['currnet_task'] = designbuf[0].task_id
+            buf['current_task'] = designbuf[0].task_id
             designbuf = designbuf[1:]
         buf['task_list'] = []
         if designbuf:
