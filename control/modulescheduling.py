@@ -123,7 +123,6 @@ def taskQueue2requestQueue() :
             for i in range(0, 5) :
                 if taskSet[i][x][y] == 1:
                     encoder_requestQueue({'unit_id' : str(i), 'task_id' : str(taskQueueData['taskID'])})
-            print('new taskQueue exists')
     threading.Timer(0.4, taskQueue2requestQueue).start()
 
 
@@ -133,7 +132,6 @@ def scoreQueue2designateQueue():
     global taskID
     for unitID in range(0,5):
         newscoreData = decoder_scoreQueue(taskID, unitID)
-        print('taskID: ' + str(taskID) + 'unitID' + str(unitID))
         print(newscoreData)
         if(newscoreData != None) :
             newscoreDataList.append(newscoreData)
@@ -141,11 +139,11 @@ def scoreQueue2designateQueue():
         i = designateOperation(newscoreDataList)
         encoder_designateQueue({'unitID' : i, 'taskID' : taskID})
         taskID = taskID + 1
-    threading.Timer(2, scoreQueue2designateQueue).start()
+    threading.Timer(3, scoreQueue2designateQueue).start()
 
 def designateOperation(newScoreQueue):
     print(newScoreQueue)
-    i = random.randint(0, 4)
+    i = random.randint(1, 5)
     return  i
 
 def reAllocating():
@@ -166,8 +164,8 @@ def reAllocating():
     print('reAllocating')
     for i in range(0, 5) :
         taskSet[i][pos_x][pos_y] = new_set[i]
-        encoder_taskSet(i,taskSet[i])
-    threading.Timer(0.2, reAllocating).start()
+        encoder_taskSet(i+1,taskSet[i])
+    threading.Timer(3, reAllocating).start()
 
 def allocateOperation(): # this is a module that will be changed to AI model
     pos_x = random.randint(0,19)
