@@ -122,7 +122,7 @@ def taskQueue2requestQueue() :
             y = int(taskQueueData['pos_s_y'])
             for i in range(0, 5) :
                 if taskSet[i][x][y] == 1:
-                    encoder_requestQueue({'unit_id' : i, 'task_id' : taskQueueData['task_id']})
+                    encoder_requestQueue({'unit_id' : i, 'task_id' : taskQueueData['id']})
     threading.Timer(0.4, taskQueue2requestQueue).start()
 
 
