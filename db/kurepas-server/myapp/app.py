@@ -175,10 +175,11 @@ def get_edge():
         if designbuf:
             buf['currnet_task'] = designbuf[0].task_id
             designbuf = designbuf[1:]
-        buf['task_list'] = TASK_SET[int(currentpos.unit_id)%5]
+        buf['task_list'] = []
         if designbuf:
             for i in designbuf:
                 buf['task_list'].append(i.task_id)
+        buf['task_set'] = TASK_SET[int(currentpos.unit_id)%5]
         ret.append(buf)
         buf = {}
     return jsonify(ret)
