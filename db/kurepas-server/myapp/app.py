@@ -198,7 +198,7 @@ def post_designate():
 @app.route('/refreshMap',methods=['POST'])
 def post_map_data():
     data = request.json
-    TASK_SET[data['id']] = jsonify(data['map'])
+    TASK_SET[data['id']] = data['map']
 
     return jsonify(TASK_SET[data['id']])
 
